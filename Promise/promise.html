@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<script>
+        function creatPromise(url) {
+            //闭包
+            let p = new Promise(function (resolve, reject) {
+                //异步代码写于函数内
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success(arr) {
+                        resolve(arr)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                })
+            })
+            return p
+        }
+	
+        Promise.all([creatPromise('arr.txt'), creatPromise('brr.txt')]).then(function (arr) {
+		    console.log(arr)
+		}, function (err) {
+		    console.log(err)
+		})
+	</script>
+</body>
+</html>
